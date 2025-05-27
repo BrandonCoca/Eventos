@@ -54,7 +54,10 @@ class InscripcionResource extends Resource
                             ->placeholder('Seleccione el participante')
                             ->helperText('Seleccione el participante')
                             ->prefixIcon('heroicon-o-user')
-                            ->required(),
+                            ->required()
+                            ->validationMessages([
+                                'required' => 'El participante es obligatorio.',
+                            ]),
                         Forms\Components\Select::make('evento_id')
                             ->label('Evento')
                             ->relationship('evento', 'nombre', function ($query) {
@@ -66,7 +69,10 @@ class InscripcionResource extends Resource
                             ->placeholder('Seleccione el evento')
                             ->helperText('Seleccione el evento')
                             ->prefixIcon('heroicon-o-academic-cap')
-                            ->required(),
+                            ->required()
+                            ->validationMessages([
+                                'required' => 'El evento es obligatorio.',
+                            ]),
                         Forms\Components\Select::make('registro_id')
                             ->label('Registro')
                             ->relationship('registro', 'tipo', function ($query) {
@@ -78,7 +84,10 @@ class InscripcionResource extends Resource
                             ->placeholder('Seleccione el registro')
                             ->helperText('Seleccione el registro')
                             ->prefixIcon('heroicon-o-document-chart-bar')
-                            ->required(),
+                            ->required()
+                            ->validationMessages([
+                                'required' => 'El registro es obligatorio.',
+                            ]),
                         Forms\Components\Toggle::make('estado')
                             ->label('Estado')
                             ->default(true)

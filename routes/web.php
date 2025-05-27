@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Route::redirect('/', '/admin');
-
+Route::get('/home', function () {
+    return redirect('/admin');
+})->name('home');
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');

@@ -75,12 +75,18 @@ class AsistenciaResource extends Resource
                                     $inscripcion = Inscripcion::with('evento')->find($state);
                                     $set('evento_nombre', $inscripcion?->evento?->nombre ?? '');
                                 }
-                            }),
+                            })
+                            ->validationMessages([
+                                'required' => 'La inscripcion es obligatoria.',
+                            ]),
                         Forms\Components\TextInput::make('evento_nombre')
                             ->label('Evento')
                             ->disabled()
                             ->dehydrated(false) // No se guarda en la base de datos
-                            ->prefixIcon('heroicon-o-academic-cap'),
+                            ->prefixIcon('heroicon-o-academic-cap')
+                            ->validationMessages([
+                                'required' => 'El evento es obligatorio.',
+                            ]),
                         Forms\Components\Toggle::make('presente')
                             ->label('Asistencia')
                             ->default(true)

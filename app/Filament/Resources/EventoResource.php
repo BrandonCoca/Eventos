@@ -74,7 +74,10 @@ class EventoResource extends Resource
                                 'conferencia' => 'Conferencia',
                                 'seminario' => 'Seminario',
                             ])
-                            ->required(),
+                            ->required()
+                            ->validationMessages([
+                                'required' => 'El tipo es obligatorio.',
+                            ]),
 
                         Forms\Components\DateTimePicker::make('fechainicio')
                             ->seconds(false)
@@ -86,7 +89,10 @@ class EventoResource extends Resource
                             ->closeOnDateSelection()
                             ->prefixIcon('heroicon-o-calendar')
                             ->timezone('America/La_Paz')
-                            ->required(),
+                            ->required()
+                            ->validationMessages([
+                                'required' => 'La fecha de inicio es obligatoria.',
+                            ]),
                         Forms\Components\DateTimePicker::make('fechafin')
                             ->seconds(false)
                             ->native(false)
@@ -97,7 +103,10 @@ class EventoResource extends Resource
                             ->closeOnDateSelection()
                             ->prefixIcon('heroicon-o-calendar')
                             ->timezone('America/La_Paz')
-                            ->required(),
+                            ->required()
+                            ->validationMessages([
+                                'required' => 'La fecha de fin es obligatoria.',
+                            ]),
                         Forms\Components\Textarea::make('descripcion')
                             ->label('Descripción del evento')
                             ->placeholder('Ingrese una descripción del evento')
@@ -121,7 +130,10 @@ class EventoResource extends Resource
                             ->placeholder('Seleccione el aula')
                             ->helperText('Seleccione el aula')
                             ->prefixIcon('heroicon-o-calendar')
-                            ->required(),
+                            ->required()
+                            ->validationMessages([
+                                'required' => 'El aula es obligatoria.',
+                            ]),
 
                     ]),
             ]);

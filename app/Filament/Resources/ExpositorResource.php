@@ -130,7 +130,7 @@ class ExpositorResource extends Resource
                     ->wrap()
                     ->icon('heroicon-o-briefcase')
                     ->weight('bold'),
-                Tables\Columns\TextColumn::make('evento_id')
+                Tables\Columns\TextColumn::make('evento.nombre')
                     ->label('Evento')
                     ->searchable()
                     ->sortable()
@@ -214,7 +214,7 @@ class ExpositorResource extends Resource
                             ->copyable()
                             ->color('primary'),
 
-                        TextEntry::make('evento_id')
+                        TextEntry::make('evento.nombre')
                             ->label('Evento')
                             ->icon('heroicon-o-academic-cap')
                             ->weight('bold')

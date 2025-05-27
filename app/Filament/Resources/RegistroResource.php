@@ -45,14 +45,22 @@ class RegistroResource extends Resource
                                 'ingeniero' => 'Ingeniero',
                                 'externo' => 'Externo',
                             ])
-                            ->required(),
+                            ->required()
+                            ->validationMessages([
+                                'required' => 'El grado es obligatorio.',
+                            ]),
                 Forms\Components\TextInput::make('precio')
                             ->label('Precio')
                             ->placeholder('Ingrese el precio')
                             ->helperText('Ingrese el precio')
                             ->prefixIcon('heroicon-o-document-chart-bar')
                             ->minValue(1)
-                            ->required(),
+                            ->numeric()
+                            ->required()
+                            ->validationMessages([
+                                'required' => 'El precio es obligatorio.',
+                                'minValue' => 'El precio debe ser mayor o igual a 1.',
+                            ]),
             ]);
     }
 
