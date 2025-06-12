@@ -20,8 +20,8 @@ use Filament\Infolists\Infolist;
 class AulaResource extends Resource
 {
     protected static ?string $model = Aula::class;
-    protected static ?string $modelLabel = 'Aula';
-    protected static ?string $pluralModelLabel = 'Aulas';
+    protected static ?string $modelLabel = 'Sitio';
+    protected static ?string $pluralModelLabel = 'Sitios';
 
     protected static ?string $navigationGroup = 'Manejo del evento';
     protected static ?string $navigationIcon = 'heroicon-o-cursor-arrow-ripple';

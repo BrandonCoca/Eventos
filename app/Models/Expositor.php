@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Expositor extends Model
 {
@@ -16,4 +17,5 @@ class Expositor extends Model
     {
         return $this->belongsTo(Evento::class);
     }
+    use HasFactory;
 }

@@ -104,6 +104,7 @@ class EventoResource extends Resource
                             ->prefixIcon('heroicon-o-calendar')
                             ->timezone('America/La_Paz')
                             ->required()
+                            ->rules(['after_or_equal:fechainicio'])
                             ->validationMessages([
                                 'required' => 'La fecha de fin es obligatoria.',
                             ]),

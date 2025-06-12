@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Inscripcion extends Model
 {
@@ -12,6 +13,10 @@ class Inscripcion extends Model
         'participante_id',
         'estado',
         'fecha',
+    ];
+    protected $casts = [
+        'fecha' => 'datetime',
+        'estado' => 'boolean',
     ];
     public function registro()
     {
@@ -29,4 +34,5 @@ class Inscripcion extends Model
     {
         return $this->hasMany(Asistencia::class);
     }
+    use HasFactory;
 }

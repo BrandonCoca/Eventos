@@ -75,9 +75,12 @@ class InscripcionResource extends Resource
                             ]),
                         Forms\Components\Select::make('registro_id')
                             ->label('Registro')
-                            ->relationship('registro', 'tipo', function ($query) {
-                                return $query->orderBy('created_at', 'desc');
-                            })
+                            ->relationship(
+                                name: 'registro',
+                                titleAttribute: 'tipo',
+                                modifyQueryUsing: fn ($query) => $query->orderBy('created_at', 'desc')
+                            )
+                            ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->tipo} - {$record->precio}")
                             ->searchable()
                             ->native(false)
                             ->preload()
@@ -89,7 +92,7 @@ class InscripcionResource extends Resource
                                 'required' => 'El registro es obligatorio.',
                             ]),
                         Forms\Components\Toggle::make('estado')
-                            ->label('Estado')
+                            ->label('Pagado')
                             ->default(true)
                             ->required()
                             ->columnSpan('full'),
@@ -123,7 +126,7 @@ class InscripcionResource extends Resource
                     ->icon('heroicon-o-document-chart-bar')
                     ->weight('bold'),
                 Tables\Columns\IconColumn::make('estado')
-                    ->label('Estado')
+                    ->label('Pagado')
                     ->boolean()
                     ->trueIcon('heroicon-o-check-circle')
                     ->falseIcon('heroicon-o-x-circle')
@@ -240,7 +243,7 @@ class InscripcionResource extends Resource
                             ->color('primary'),
 
                         IconEntry::make('estado')
-                            ->label('Estado')
+                            ->label('Pagado')
                             ->boolean()
                             ->trueIcon('heroicon-o-check-circle')
                             ->falseIcon('heroicon-o-x-circle')

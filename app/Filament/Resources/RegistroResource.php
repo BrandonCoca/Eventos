@@ -60,6 +60,7 @@ class RegistroResource extends Resource
                             ->validationMessages([
                                 'required' => 'El precio es obligatorio.',
                                 'minValue' => 'El precio debe ser mayor o igual a 1.',
+                                'numeric' => 'El precio debe ser un número.',
                             ]),
             ]);
     }

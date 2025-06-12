@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Participante extends Model
@@ -14,4 +15,5 @@ class Participante extends Model
     {
         return $this->hasMany(Inscripcion::class);
     }
+    use HasFactory;
 }

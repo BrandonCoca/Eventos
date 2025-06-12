@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Evento extends Model
 {
     protected $fillable = [
@@ -26,5 +26,6 @@ class Evento extends Model
     {
         return $this->hasMany(Expositor::class);
     }
+    use HasFactory;
 }
 

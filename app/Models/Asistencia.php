@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Asistencia extends Model
 {
@@ -14,4 +15,5 @@ class Asistencia extends Model
     {
         return $this->belongsTo(Inscripcion::class);
     }
+    use HasFactory;
 }

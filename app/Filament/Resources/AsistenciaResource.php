@@ -42,51 +42,55 @@ class AsistenciaResource extends Resource
                     ->collapsible()
                     ->columns(2)
                     ->schema([
-                        Forms\Components\Select::make('inscripcion_id')
-                            ->label('Participante inscrito')
-                            ->placeholder('Seleccione un participante inscrito')
-                            ->helperText('Seleccione un participante inscrito')
-                            ->relationship(
-                                'inscripcion', 
-                                'id',
-                            function ($query) {
-                                return $query->with(['participante', 'evento'])
-                                    ->where('estado', true)
-                                    ->orderBy('created_at', 'desc');
-                                }
-                            )
-                            ->getOptionLabelFromRecordUsing(fn ($record) => $record->participante->nombre)
-                            ->searchable()
-                            ->native(false)
-                            ->preload()
-                            ->prefixIcon('heroicon-o-user')
-                            ->required()
-                            ->live()
-                            ->afterStateUpdated(function (callable $set, $state) {
-                                if ($state) {
-                                    $inscripcion = Inscripcion::with('evento')->find($state);
-                                    $set('evento_nombre', $inscripcion?->evento?->nombre ?? '');
-                                } else {
-                                    $set('evento_nombre', '');
-                                }
-                            })
-                            ->afterStateHydrated(function (callable $set, $state, callable $get) {
-                                if ($state) {
-                                    $inscripcion = Inscripcion::with('evento')->find($state);
-                                    $set('evento_nombre', $inscripcion?->evento?->nombre ?? '');
-                                }
-                            })
-                            ->validationMessages([
-                                'required' => 'La inscripcion es obligatoria.',
-                            ]),
-                        Forms\Components\TextInput::make('evento_nombre')
-                            ->label('Evento')
-                            ->disabled()
-                            ->dehydrated(false) // No se guarda en la base de datos
-                            ->prefixIcon('heroicon-o-academic-cap')
-                            ->validationMessages([
-                                'required' => 'El evento es obligatorio.',
-                            ]),
+                        Forms\Components\Select::make('evento_id')
+    ->label('Evento')
+    ->placeholder('Seleccione un evento')
+    ->helperText('Primero seleccione el evento')
+    ->options(function () {
+        return \App\Models\Evento::pluck('nombre', 'id');
+    })
+    ->searchable()
+    ->native(false)
+    ->preload()
+    ->prefixIcon('heroicon-o-academic-cap')
+    ->required()
+    ->live()
+    ->afterStateUpdated(function (callable $set, $state) {
+        // Limpiar la selección de participante cuando cambia el evento
+        $set('inscripcion_id', null);
+    })
+    ->validationMessages([
+        'required' => 'El evento es obligatorio.',
+    ]),
+
+Forms\Components\Select::make('inscripcion_id')
+    ->label('Participante inscrito')
+    ->placeholder('Seleccione un participante inscrito')
+    ->helperText('Seleccione un participante inscrito en el evento')
+    ->options(function (callable $get) {
+        $eventoId = $get('evento_id');
+        
+        if (!$eventoId) {
+            return [];
+        }
+        
+        return \App\Models\Inscripcion::with('participante')
+            ->where('estado', true)
+            ->where('evento_id', $eventoId)
+            ->get()
+            ->mapWithKeys(function ($inscripcion) {
+                return [$inscripcion->id => $inscripcion->participante->nombre ?? 'Sin nombre'];
+            });
+    })
+    ->searchable()
+    ->native(false)
+    ->live() // Importante para que se actualice cuando cambia el evento
+    ->prefixIcon('heroicon-o-user')
+    ->required()
+    ->disabled(fn (callable $get) => !$get('evento_id'))
+    ->validationMessages([
+        'required' => 'La inscripción es obligatoria.',
+    ]),
                         Forms\Components\Toggle::make('presente')
                             ->label('Asistencia')
                             ->default(true)
